@@ -16,7 +16,7 @@ from PIL import Image, ImageTk
 import os
 import requests
 from io import BytesIO
-# instalarse para su ejecucion en otro lado
+# instalarse para su ejecucion en otro lado, igual que requests, tkinter, base64 y PIL
 import mysql.connector
 
 class IEditBreed(Toplevel):
@@ -471,8 +471,13 @@ class Web:
         cursor1=conn1.cursor()
         select1="select titulo from dogbreeds order by titulo desc"
         cursor1.execute(select1)
+        
         rows=cursor1.fetchall()
+        for num in range(len(rows)):
+            if os.path.exists('images/image-{}.jpg'.format(num)):
+                os.remove('images/image-{}.jpg'.format(num))
         for item in rows:
+            
             self.dataIList.append(item[0])
         
         self.start(self.dataIList)
